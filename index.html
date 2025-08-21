@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Countdown to Us ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #ffdde1, #ee9ca7);
+      color: white;
+      text-align: center;
+      overflow: hidden; /* prevents any scrollbar flicker */
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 2.5em;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    }
+
+    /* Countdown styling */
+    #countdown {
+      font-size: 3em;
+      font-weight: bold;
+      margin: 40px auto;
+      display: inline-block;
+      padding: 20px 40px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 20px rgba(255,255,255,0.6);
+      text-shadow: 2px 2px 10px rgba(0,0,0,0.4);
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { box-shadow: 0 0 15px rgba(255,255,255,0.6); }
+      to { box-shadow: 0 0 30px rgba(255,255,255,0.9); }
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      width: 20px;
+      height: 20px;
+      background: rgba(255,255,255,0.7);
+      clip-path: polygon(50% 0%, 61% 13%, 75% 0, 100% 25%, 50% 100%, 0 25%, 25% 0, 39% 13%);
+      animation: floatUp 8s infinite ease-in;
+      pointer-events: none; /* prevents any interaction */
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
+    }
+
+    /* Slideshow */
+    .slides {
+      display: none;
+      margin: 20px auto;
+      max-width: 70%;
+      max-height: 500px;
+      border: 3px solid rgba(255,255,255,0.7);
+      border-radius: 12px;
+      object-fit: contain;
+      animation: fadeEffect 1.5s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    @keyframes fadeEffect {
+      from {opacity: 0.4;}
+      to {opacity: 1;}
+    }
+
+    .romantic-message {
+      margin-top: 20px;
+      font-size: 1.4em;
+      font-style: italic;
+      padding: 0 20px;
+      text-shadow: 1px 1px 6px rgba(0,0,0,0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Countdown to the moment we finally get to see each other again!! </h1>
+
+  <div id="countdown"></div>
+
+  <!-- Slideshow -->
+  <div id="slideshow"></div>
+
+  <p class="romantic-message">
+    Every passing second on this clock brings us closer malkin. You’re my reason, my forever, my everything. I love you the most 💕
+  </p>
+
+  <!-- Floating hearts -->
+  <script>
+    // Floating hearts
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      // Spawn slightly inside viewport to avoid overflow
+      heart.style.left = (5 + Math.random() * 90) + "vw";
+      heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 8000);
+    }
+    setInterval(createHeart, 500);
+
+    // Countdown
+    const countdownEl = document.getElementById("countdown");
+    const targetDate = new Date("Aug 29, 2025 06:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdownEl.innerHTML = 
+        days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+      if (distance < 0) {
+        countdownEl.innerHTML = "Finally Together ❤️";
+      }
+    }
+
+    setInterval(updateCountdown, 1000);
+
+    // Slideshow with 33 photos
+    const slideshow = document.getElementById("slideshow");
+    const totalPhotos = 33;
+    for (let i = 1; i <= totalPhotos; i++) {
+      const img = document.createElement("img");
+      img.className = "slides";
+      img.src = "project_assets_2/photo" + i + ".jpg";
+      img.alt = "Us " + i;
+      slideshow.appendChild(img);
+    }
+
+    let slideIndex = 0;
+    function showSlides() {
+      const slides = document.getElementsByClassName("slides");
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) {slideIndex = 1}
+      slides[slideIndex-1].style.display = "block";
+      setTimeout(showSlides, 3000); // 3 seconds per slide
+    }
+    showSlides();
+  </script>
+</body>
+</html>
