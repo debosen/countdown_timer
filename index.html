@@ -11,11 +11,16 @@
       background: linear-gradient(to right, #ffdde1, #ee9ca7);
       color: white;
       text-align: center;
-      overflow: hidden; /* prevents any scrollbar flicker */
+      overflow: hidden; /* prevent scroll flicker */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
     }
 
     h1 {
-      margin-top: 20px;
+      margin: 20px 10px 10px;
       font-size: 2.5em;
       text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
     }
@@ -24,8 +29,7 @@
     #countdown {
       font-size: 3em;
       font-weight: bold;
-      margin: 40px auto;
-      display: inline-block;
+      margin: 20px 0;
       padding: 20px 40px;
       border-radius: 20px;
       background: rgba(255, 255, 255, 0.15);
@@ -48,7 +52,7 @@
       background: rgba(255,255,255,0.7);
       clip-path: polygon(50% 0%, 61% 13%, 75% 0, 100% 25%, 50% 100%, 0 25%, 25% 0, 39% 13%);
       animation: floatUp 8s infinite ease-in;
-      pointer-events: none; /* prevents any interaction */
+      pointer-events: none;
     }
 
     @keyframes floatUp {
@@ -56,17 +60,19 @@
       100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
     }
 
-    /* Slideshow */
+    /* Slideshow images */
     .slides {
       display: none;
-      margin: 20px auto;
-      max-width: 70%;
-      max-height: 500px;
+      margin: 15px auto;
+      max-width: 85%;
+      max-height: 60vh; /* <= keeps it inside the screen */
+      width: auto;
+      height: auto;
       border: 3px solid rgba(255,255,255,0.7);
       border-radius: 12px;
-      object-fit: contain;
       animation: fadeEffect 1.5s;
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      object-fit: contain;
     }
 
     @keyframes fadeEffect {
@@ -75,17 +81,30 @@
     }
 
     .romantic-message {
-      margin-top: 20px;
+      margin: 15px 20px 30px;
       font-size: 1.4em;
       font-style: italic;
-      padding: 0 20px;
+      max-width: 90%;
       text-shadow: 1px 1px 6px rgba(0,0,0,0.4);
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 768px) {
+      h1 { font-size: 2em; }
+      #countdown { font-size: 2em; padding: 15px 25px; }
+      .romantic-message { font-size: 1.1em; }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 1.5em; }
+      #countdown { font-size: 1.5em; padding: 10px 20px; }
+      .romantic-message { font-size: 1em; }
     }
   </style>
 </head>
 <body>
 
-  <h1>Countdown to the moment we finally get to see each other again!! </h1>
+  <h1>Countdown to the moment we finally get to see each other again!!!</h1>
 
   <div id="countdown"></div>
 
@@ -102,7 +121,6 @@
     function createHeart() {
       const heart = document.createElement("div");
       heart.className = "heart";
-      // Spawn slightly inside viewport to avoid overflow
       heart.style.left = (5 + Math.random() * 90) + "vw";
       heart.style.animationDuration = (4 + Math.random() * 4) + "s";
       document.body.appendChild(heart);
